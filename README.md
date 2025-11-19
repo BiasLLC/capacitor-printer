@@ -194,7 +194,7 @@ Presents the printing UI to print PDF documents.
 ### printWebView(...)
 
 ```typescript
-printWebView(options?: PrintOptions) => Promise<void>
+printWebView(options?: PrintOptions | undefined) => Promise<void>
 ```
 
 Presents the printing UI to print web view content.
