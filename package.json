@@ -1,5 +1,5 @@
 {
-  "name": "@bias/printer",
+  "name": "@biasllc/printer",
   "version": "7.0.2",
   "description": "Capacitor plugin for printing documents, HTML, PDFs, images and web views",
   "main": "dist/plugin.cjs.js",
