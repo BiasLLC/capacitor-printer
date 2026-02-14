@@ -402,6 +402,30 @@
           "docs": "HTML content to print.\n\n**Content Requirements:**\n- Should be a complete HTML document with `<html>`, `<head>`, and `<body>` tags\n- Can include inline CSS styles or `<style>` tags\n- External resources (images, fonts) should use absolute URLs\n- JavaScript is not executed during print rendering\n\n**Print Optimization Tips:**\n- Use `@media print` CSS rules for print-specific styling\n- Control page breaks with `page-break-before`, `page-break-after`, `page-break-inside`\n- Hide UI elements using `.no-print { display: none; }` class\n- Adjust font sizes for readability (12pt is standard for print)\n- Use print-friendly colors (avoid dark backgrounds)\n\n**Platform Rendering:**\n- **iOS**: Rendered in WKWebView before printing\n- **Android**: Rendered in WebView before printing\n- **Web**: Rendered in hidden iframe before printing\n\n**Character Encoding:**\n- UTF-8 is recommended and default\n- Include charset in HTML: `<meta charset=\"UTF-8\">`",
           "complexTypes": [],
           "type": "string"
+        },
+        {
+          "name": "pageWidth",
+          "tags": [
+            {
+              "text": "7.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Page width in millimeters. When provided along with pageHeight,\noverrides the default system paper size for this print job.\nCommon sizes: US Letter = 216, A4 = 210, A5 = 148, Trade = 140",
+          "complexTypes": [],
+          "type": "number | undefined"
+        },
+        {
+          "name": "pageHeight",
+          "tags": [
+            {
+              "text": "7.1.0",
+              "name": "since"
+            }
+          ],
+          "docs": "Page height in millimeters. When provided along with pageWidth,\noverrides the default system paper size for this print job.\nCommon sizes: US Letter = 279, A4 = 297, A5 = 210, Trade = 216",
+          "complexTypes": [],
+          "type": "number | undefined"
         }
       ]
     },
