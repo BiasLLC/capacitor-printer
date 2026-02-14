@@ -398,6 +398,22 @@ export interface PrintHtmlOptions extends PrintOptions {
    * ```
    */
   html: string;
+
+  /**
+   * Page width in millimeters. When provided along with pageHeight,
+   * overrides the default system paper size for this print job.
+   * Common sizes: US Letter = 216, A4 = 210, A5 = 148, Trade = 140
+   * @since 7.1.0
+   */
+  pageWidth?: number;
+
+  /**
+   * Page height in millimeters. When provided along with pageWidth,
+   * overrides the default system paper size for this print job.
+   * Common sizes: US Letter = 279, A4 = 297, A5 = 210, Trade = 216
+   * @since 7.1.0
+   */
+  pageHeight?: number;
 }
 
 /**

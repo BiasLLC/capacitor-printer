@@ -76,8 +76,11 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             call.reject("html is required")
             return
         }
-
         let name = call.getString("name") ?? "Document"
+
+        // Optional page dimensions in mm
+        let pageWidth: Double? = call.getDouble("pageWidth")
+        let pageHeight: Double? = call.getDouble("pageHeight")
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -86,6 +89,8 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                 try self.implementation.printHtml(
                     html: html,
                     name: name,
+                    pageWidth: pageWidth,
+                    pageHeight: pageHeight,
                     presentingViewController: self.bridge?.viewController
                 )
                 call.resolve()
