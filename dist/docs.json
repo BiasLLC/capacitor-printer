@@ -127,6 +127,29 @@
         "slug": "printhtml"
       },
       {
+        "name": "printHtmlAsPdf",
+        "signature": "(options: PrintHtmlAsPdfOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "PrintHtmlAsPdfOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "7.2.0"
+          }
+        ],
+        "docs": "Print HTML as a correctly-sized PDF.\n\nUnlike printHtml(), this respects custom page sizes because\nit generates an intermediate PDF with embedded page dimensions.",
+        "complexTypes": [
+          "PrintHtmlAsPdfOptions"
+        ],
+        "slug": "printhtmlaspdf"
+      },
+      {
         "name": "printPdf",
         "signature": "(options: PrintPdfOptions) => Promise<void>",
         "parameters": [
@@ -426,6 +449,41 @@
           "docs": "Page height in millimeters. When provided along with pageWidth,\noverrides the default system paper size for this print job.\nCommon sizes: US Letter = 279, A4 = 297, A5 = 210, Trade = 216",
           "complexTypes": [],
           "type": "number | undefined"
+        }
+      ]
+    },
+    {
+      "name": "PrintHtmlAsPdfOptions",
+      "slug": "printhtmlaspdfoptions",
+      "docs": "Options for printing HTML as a correctly-sized PDF.\n\nLoads HTML in a hidden WKWebView, generates a PDF at the\nspecified page dimensions, then prints the PDF. CSS @page\nmargins in the HTML are preserved and authoritative.",
+      "tags": [
+        {
+          "text": "7.2.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "html",
+          "tags": [],
+          "docs": "Complete HTML document string",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "pageWidth",
+          "tags": [],
+          "docs": "Page width in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "pageHeight",
+          "tags": [],
+          "docs": "Page height in millimeters",
+          "complexTypes": [],
+          "type": "number"
         }
       ]
     },

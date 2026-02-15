@@ -6,14 +6,19 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     private let pluginVersion: String = "7.0.2"
     public let identifier = "PrinterPlugin"
     public let jsName = "Printer"
-    public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "printBase64", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "printFile", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "printHtml", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "printWebView", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
-    ]
+    public override func load() {
+        pluginMethods.append(
+            contentsOf: [
+                CAPPluginMethod(name: "printFile", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "printHtml", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "printHtmlAsPdf", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "printBase64", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "printWebView", returnType: CAPPluginReturnPromise),
+                CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
+            ]
+        )
+    }
 
     private let implementation = Printer()
 
@@ -43,6 +48,42 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                 call.resolve()
             } catch {
                 call.reject("Failed to print base64 data: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    @objc func printHtmlAsPdf(_ call: CAPPluginCall) {
+        guard let html = call.getString("html") else {
+            call.reject("html is required")
+            return
+        }
+        guard let pageWidth = call.getDouble("pageWidth") else {
+            call.reject("pageWidth is required (mm)")
+            return
+        }
+        guard let pageHeight = call.getDouble("pageHeight") else {
+            call.reject("pageHeight is required (mm)")
+            return
+        }
+        
+        let name = call.getString("name") ?? "Document"
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.implementation.printHtmlAsPdf(
+                html: html,
+                name: name,
+                pageWidthMM: pageWidth,
+                pageHeightMM: pageHeight,
+                presentingViewController: self.bridge?.viewController
+            ) { result in
+                switch result {
+                case .success:
+                    call.resolve()
+                case .failure(let error):
+                    call.reject("Print failed: \(error.localizedDescription)")
+                }
             }
         }
     }

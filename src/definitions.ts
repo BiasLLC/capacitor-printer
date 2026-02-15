@@ -134,6 +134,16 @@ export interface PrinterPlugin {
   printHtml(options: PrintHtmlOptions): Promise<void>;
 
   /**
+   * Print HTML as a correctly-sized PDF.
+   *
+   * Unlike printHtml(), this respects custom page sizes because
+   * it generates an intermediate PDF with embedded page dimensions.
+   *
+   * @since 7.2.0
+   */
+  printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void>;
+
+  /**
    * Presents the printing UI to print PDF documents.
    *
    * **Platform Behavior:**
@@ -414,6 +424,26 @@ export interface PrintHtmlOptions extends PrintOptions {
    * @since 7.1.0
    */
   pageHeight?: number;
+}
+
+/**
+ * Options for printing HTML as a correctly-sized PDF.
+ *
+ * Loads HTML in a hidden WKWebView, generates a PDF at the
+ * specified page dimensions, then prints the PDF. CSS @page
+ * margins in the HTML are preserved and authoritative.
+ *
+ * @since 7.2.0
+ */
+export interface PrintHtmlAsPdfOptions extends PrintOptions {
+  /** Complete HTML document string */
+  html: string;
+  
+  /** Page width in millimeters */
+  pageWidth: number;
+  
+  /** Page height in millimeters */
+  pageHeight: number;
 }
 
 /**

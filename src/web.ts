@@ -3,6 +3,7 @@ import { WebPlugin } from '@capacitor/core';
 import type {
   PrintBase64Options,
   PrintFileOptions,
+  PrintHtmlAsPdfOptions,
   PrintHtmlOptions,
   PrintOptions,
   PrintPdfOptions,
@@ -19,6 +20,7 @@ export class PrinterWeb extends WebPlugin implements PrinterPlugin {
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
+
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: mimeType });
 
@@ -26,6 +28,11 @@ export class PrinterWeb extends WebPlugin implements PrinterPlugin {
     const url = URL.createObjectURL(blob);
     await this.printFromUrl(url, name);
     URL.revokeObjectURL(url);
+  }
+
+  async printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void> {
+    // Web fallback: just print HTML directly
+    return this.printHtml({ html: options.html, name: options.name });
   }
 
   async printFile(options: PrintFileOptions): Promise<void> {

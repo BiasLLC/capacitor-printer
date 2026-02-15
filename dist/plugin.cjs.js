@@ -22,6 +22,10 @@ class PrinterWeb extends core.WebPlugin {
         await this.printFromUrl(url, name);
         URL.revokeObjectURL(url);
     }
+    async printHtmlAsPdf(options) {
+        // Web fallback: just print HTML directly
+        return this.printHtml({ html: options.html, name: options.name });
+    }
     async printFile(options) {
         const { path, name } = options;
         // On web, we can only print URLs that are accessible

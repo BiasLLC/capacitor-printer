@@ -68,6 +68,7 @@ await Printer.printWebView({
 * [`printBase64(...)`](#printbase64)
 * [`printFile(...)`](#printfile)
 * [`printHtml(...)`](#printhtml)
+* [`printHtmlAsPdf(...)`](#printhtmlaspdf)
 * [`printPdf(...)`](#printpdf)
 * [`printWebView(...)`](#printwebview)
 * [`getPluginVersion()`](#getpluginversion)
@@ -160,6 +161,26 @@ Use CSS media queries to customize print output:
 | **`options`** | <code><a href="#printhtmloptions">PrintHtmlOptions</a></code> | - The HTML content and configuration for printing |
 
 **Since:** 7.0.0
+
+--------------------
+
+
+### printHtmlAsPdf(...)
+
+```typescript
+printHtmlAsPdf(options: PrintHtmlAsPdfOptions) => Promise<void>
+```
+
+Print HTML as a correctly-sized PDF.
+
+Unlike printHtml(), this respects custom page sizes because
+it generates an intermediate PDF with embedded page dimensions.
+
+| Param         | Type                                                                    |
+| ------------- | ----------------------------------------------------------------------- |
+| **`options`** | <code><a href="#printhtmlaspdfoptions">PrintHtmlAsPdfOptions</a></code> |
+
+**Since:** 7.2.0
 
 --------------------
 
@@ -275,6 +296,21 @@ Options for printing HTML content.
 | **`html`**       | <code>string</code> | HTML content to print. **Content Requirements:** - Should be a complete HTML document with `&lt;html&gt;`, `&lt;head&gt;`, and `&lt;body&gt;` tags - Can include inline CSS styles or `&lt;style&gt;` tags - External resources (images, fonts) should use absolute URLs - JavaScript is not executed during print rendering **Print Optimization Tips:** - Use `@media print` CSS rules for print-specific styling - Control page breaks with `page-break-before`, `page-break-after`, `page-break-inside` - Hide UI elements using `.no-print { display: none; }` class - Adjust font sizes for readability (12pt is standard for print) - Use print-friendly colors (avoid dark backgrounds) **Platform Rendering:** - **iOS**: Rendered in WKWebView before printing - **Android**: Rendered in WebView before printing - **Web**: Rendered in hidden iframe before printing **Character Encoding:** - UTF-8 is recommended and default - Include charset in HTML: `&lt;meta charset="UTF-8"&gt;` | 7.0.0 |
 | **`pageWidth`**  | <code>number</code> | Page width in millimeters. When provided along with pageHeight, overrides the default system paper size for this print job. Common sizes: US Letter = 216, A4 = 210, A5 = 148, Trade = 140                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 7.1.0 |
 | **`pageHeight`** | <code>number</code> | Page height in millimeters. When provided along with pageWidth, overrides the default system paper size for this print job. Common sizes: US Letter = 279, A4 = 297, A5 = 210, Trade = 216                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 7.1.0 |
+
+
+#### PrintHtmlAsPdfOptions
+
+Options for printing HTML as a correctly-sized PDF.
+
+Loads HTML in a hidden WKWebView, generates a PDF at the
+specified page dimensions, then prints the PDF. CSS @page
+margins in the HTML are preserved and authoritative.
+
+| Prop             | Type                | Description                   |
+| ---------------- | ------------------- | ----------------------------- |
+| **`html`**       | <code>string</code> | Complete HTML document string |
+| **`pageWidth`**  | <code>number</code> | Page width in millimeters     |
+| **`pageHeight`** | <code>number</code> | Page height in millimeters    |
 
 
 #### PrintPdfOptions
