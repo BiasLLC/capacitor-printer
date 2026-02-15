@@ -3,23 +3,18 @@ import Capacitor
 
 @objc(PrinterPlugin)
 public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
-    private let pluginVersion: String = "7.0.2"
+    private let pluginVersion: String = "7.2.0"
     public let identifier = "PrinterPlugin"
     public let jsName = "Printer"
-    public override func load() {
-        pluginMethods.append(
-            contentsOf: [
-                CAPPluginMethod(name: "printFile", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "printHtml", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "printHtmlAsPdf", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "printBase64", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "printWebView", returnType: CAPPluginReturnPromise),
-                CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
-            ]
-        )
-    }
-
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "printBase64", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printFile", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printHtml", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printHtmlAsPdf", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printWebView", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
+    ]
     private let implementation = Printer()
 
     @objc func printBase64(_ call: CAPPluginCall) {
