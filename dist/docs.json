@@ -212,49 +212,6 @@
         "slug": "printpdf"
       },
       {
-        "name": "printWebView",
-        "signature": "(options?: PrintOptions | undefined) => Promise<void>",
-        "parameters": [
-          {
-            "name": "options",
-            "docs": "- Optional configuration for printing (name only)",
-            "type": "PrintOptions | undefined"
-          }
-        ],
-        "returns": "Promise<void>",
-        "tags": [
-          {
-            "name": "param",
-            "text": "options - Optional configuration for printing (name only)"
-          },
-          {
-            "name": "returns",
-            "text": "Promise that resolves when print dialog is dismissed"
-          },
-          {
-            "name": "throws",
-            "text": "Error if web view is not available or printing fails"
-          },
-          {
-            "name": "since",
-            "text": "7.0.0"
-          },
-          {
-            "name": "example",
-            "text": "```typescript\n// Print current web view with default name\nawait Printer.printWebView();\n\n// Print with custom job name\nawait Printer.printWebView({\n  name: 'Dashboard Screenshot',\n});\n\n// Use with print-specific CSS in your HTML\n// Add this to your app's CSS:\n//"
-          },
-          {
-            "name": "media",
-            "text": "print {\n//   .no-print { display: none; }\n//   body { font-size: 12pt; }\n// }\nawait Printer.printWebView({\nname: 'User Profile',\n});\n```"
-          }
-        ],
-        "docs": "Presents the printing UI to print web view content.\n\nPrints the current content displayed in your app's web view.\n\n**Platform Behavior:**\n- **iOS**: Uses UIPrintInteractionController with WKWebView's view printable\n- **Android**: Uses WebView.createPrintDocumentAdapter() with PrintManager\n- **Web**: Triggers window.print() for current page\n\n**Print Styling:**\nSupports CSS print media queries for customization. The web view's current\nstyles will be applied, including any @media print rules.\n\n**Use Cases:**\n- Print the current app screen/page\n- Print web-based reports or dashboards\n- Print user-generated content displayed in web view",
-        "complexTypes": [
-          "PrintOptions"
-        ],
-        "slug": "printwebview"
-      },
-      {
         "name": "getPluginVersion",
         "signature": "() => Promise<{ version: string; }>",
         "parameters": [],
@@ -561,60 +518,6 @@
           "docs": "Path to the PDF document.\n\n**iOS Path Formats:**\n- `file://` URL: Full file URL path to PDF document\n- Relative path: Path relative to app's documents directory\n- Must be within app's accessible directories (documents, temporary, cache)\n- PDF must be valid and not password-protected\n\n**Android Path Formats:**\n- `content://` URI: Content provider URI (recommended for external PDFs)\n- `file://` path: Direct file system path to PDF\n- Must have read permission for the file\n- Supports both single-page and multi-page PDFs\n\n**Web Path Formats:**\n- Relative or absolute path accessible from web context\n- Must be a valid PDF file\n\n**Validation:**\n- File must exist at the specified path\n- File must be a valid PDF (checked by magic number/header)\n- File must be readable by the app\n\n**Common Sources:**\n- App documents: PDFs saved in app's document directory\n- Downloads: PDFs from system downloads (use content:// on Android)\n- Generated PDFs: Temporary PDFs created by the app\n- Network downloads: PDFs downloaded and saved locally",
           "complexTypes": [],
           "type": "string"
-        }
-      ]
-    },
-    {
-      "name": "PrintOptions",
-      "slug": "printoptions",
-      "docs": "Base options for all print operations.",
-      "tags": [
-        {
-          "text": "7.0.0",
-          "name": "since"
-        }
-      ],
-      "methods": [],
-      "properties": [
-        {
-          "name": "name",
-          "tags": [
-            {
-              "text": "7.0.0",
-              "name": "since"
-            },
-            {
-              "text": "'Document'",
-              "name": "default"
-            },
-            {
-              "text": "ios Shown in print preview and activity view",
-              "name": "platform"
-            },
-            {
-              "text": "android Shown in print queue and notifications",
-              "name": "platform"
-            },
-            {
-              "text": "web Used as document title in print dialog",
-              "name": "platform"
-            },
-            {
-              "text": "'Invoice #12345'",
-              "name": "example"
-            },
-            {
-              "text": "'Annual Report 2024'",
-              "name": "example"
-            },
-            {
-              "text": "'Receipt - Order #789'",
-              "name": "example"
-            }
-          ],
-          "docs": "Name of the print job.\n\n**Usage:**\n- Displayed in the system print queue\n- Shown in print history/logs\n- May appear in printer status displays\n- Used as default filename for \"Save as PDF\" option\n\n**Platform Behavior:**\n- **iOS**: Shown in print preview header and activity view\n- **Android**: Displayed in print job notification and print queue\n- **Web**: Used as document title in print dialog\n\n**Best Practices:**\n- Use descriptive names (e.g., \"Invoice #12345\", \"Q4 Report\")\n- Keep under 50 characters for better display\n- Avoid special characters that may cause issues in filenames\n- Include relevant identifiers (order numbers, dates, etc.)\n\n**Examples:**\n- \"Invoice #12345\"\n- \"Sales Report - 2024 Q4\"\n- \"Customer Receipt - John Doe\"\n- \"Product Photo - SKU-ABC123\"",
-          "complexTypes": [],
-          "type": "string | undefined"
         }
       ]
     }

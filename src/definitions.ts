@@ -184,52 +184,6 @@ export interface PrinterPlugin {
   printPdf(options: PrintPdfOptions): Promise<void>;
 
   /**
-   * Presents the printing UI to print web view content.
-   *
-   * Prints the current content displayed in your app's web view.
-   *
-   * **Platform Behavior:**
-   * - **iOS**: Uses UIPrintInteractionController with WKWebView's view printable
-   * - **Android**: Uses WebView.createPrintDocumentAdapter() with PrintManager
-   * - **Web**: Triggers window.print() for current page
-   *
-   * **Print Styling:**
-   * Supports CSS print media queries for customization. The web view's current
-   * styles will be applied, including any @media print rules.
-   *
-   * **Use Cases:**
-   * - Print the current app screen/page
-   * - Print web-based reports or dashboards
-   * - Print user-generated content displayed in web view
-   *
-   * @param options - Optional configuration for printing (name only)
-   * @returns Promise that resolves when print dialog is dismissed
-   * @throws Error if web view is not available or printing fails
-   * @since 7.0.0
-   * @example
-   * ```typescript
-   * // Print current web view with default name
-   * await Printer.printWebView();
-   *
-   * // Print with custom job name
-   * await Printer.printWebView({
-   *   name: 'Dashboard Screenshot',
-   * });
-   *
-   * // Use with print-specific CSS in your HTML
-   * // Add this to your app's CSS:
-   * // @media print {
-   * //   .no-print { display: none; }
-   * //   body { font-size: 12pt; }
-   * // }
-   * await Printer.printWebView({
-   *   name: 'User Profile',
-   * });
-   * ```
-   */
-  printWebView(options?: PrintOptions): Promise<void>;
-
-  /**
    * Get the native Capacitor plugin version.
    *
    * Returns the hardcoded plugin version from native code (iOS/Android) or

@@ -71,7 +71,6 @@ await Printer.printWebView({
 * [`printHtmlAsPdf(...)`](#printhtmlaspdf)
 * [`shareHtmlAsPdf(...)`](#sharehtmlaspdf)
 * [`printPdf(...)`](#printpdf)
-* [`printWebView(...)`](#printwebview)
 * [`getPluginVersion()`](#getpluginversion)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -231,39 +230,6 @@ Presents the printing UI to print PDF documents.
 --------------------
 
 
-### printWebView(...)
-
-```typescript
-printWebView(options?: PrintOptions | undefined) => Promise<void>
-```
-
-Presents the printing UI to print web view content.
-
-Prints the current content displayed in your app's web view.
-
-**Platform Behavior:**
-- **iOS**: Uses UIPrintInteractionController with WKWebView's view printable
-- **Android**: Uses WebView.createPrintDocumentAdapter() with PrintManager
-- **Web**: Triggers window.print() for current page
-
-**Print Styling:**
-Supports CSS print media queries for customization. The web view's current
-styles will be applied, including any @media print rules.
-
-**Use Cases:**
-- Print the current app screen/page
-- Print web-based reports or dashboards
-- Print user-generated content displayed in web view
-
-| Param         | Type                                                  | Description                                       |
-| ------------- | ----------------------------------------------------- | ------------------------------------------------- |
-| **`options`** | <code><a href="#printoptions">PrintOptions</a></code> | - Optional configuration for printing (name only) |
-
-**Since:** 7.0.0
-
---------------------
-
-
 ### getPluginVersion()
 
 ```typescript
@@ -339,15 +305,6 @@ Options for printing PDF documents.
 | Prop       | Type                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Since |
 | ---------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
 | **`path`** | <code>string</code> | Path to the PDF document. **iOS Path Formats:** - `file://` URL: Full file URL path to PDF document - Relative path: Path relative to app's documents directory - Must be within app's accessible directories (documents, temporary, cache) - PDF must be valid and not password-protected **Android Path Formats:** - `content://` URI: Content provider URI (recommended for external PDFs) - `file://` path: Direct file system path to PDF - Must have read permission for the file - Supports both single-page and multi-page PDFs **Web Path Formats:** - Relative or absolute path accessible from web context - Must be a valid PDF file **Validation:** - File must exist at the specified path - File must be a valid PDF (checked by magic number/header) - File must be readable by the app **Common Sources:** - App documents: PDFs saved in app's document directory - Downloads: PDFs from system downloads (use content:// on Android) - Generated PDFs: Temporary PDFs created by the app - Network downloads: PDFs downloaded and saved locally | 7.0.0 |
-
-
-#### PrintOptions
-
-Base options for all print operations.
-
-| Prop       | Type                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Default                 | Since |
-| ---------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----- |
-| **`name`** | <code>string</code> | Name of the print job. **Usage:** - Displayed in the system print queue - Shown in print history/logs - May appear in printer status displays - Used as default filename for "Save as PDF" option **Platform Behavior:** - **iOS**: Shown in print preview header and activity view - **Android**: Displayed in print job notification and print queue - **Web**: Used as document title in print dialog **Best Practices:** - Use descriptive names (e.g., "Invoice #12345", "Q4 Report") - Keep under 50 characters for better display - Avoid special characters that may cause issues in filenames - Include relevant identifiers (order numbers, dates, etc.) **Examples:** - "Invoice #12345" - "Sales Report - 2024 Q4" - "Customer Receipt - John Doe" - "Product Photo - SKU-ABC123" | <code>'Document'</code> | 7.0.0 |
 
 
 ### Type Aliases

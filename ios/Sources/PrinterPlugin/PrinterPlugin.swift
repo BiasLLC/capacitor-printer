@@ -3,7 +3,7 @@ import Capacitor
 
 @objc(PrinterPlugin)
 public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
-    private let pluginVersion: String = "7.3.0"
+    private let pluginVersion: String = "7.3.1"
     public let identifier = "PrinterPlugin"
     public let jsName = "Printer"
     public let pluginMethods: [CAPPluginMethod] = [
@@ -13,7 +13,6 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "printHtmlAsPdf", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "shareHtmlAsPdf", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "printWebView", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
     ]
     private let implementation = Printer()
@@ -233,29 +232,6 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                 call.resolve()
             } catch {
                 call.reject("Failed to print PDF: \(error.localizedDescription)")
-            }
-        }
-    }
-
-    @objc func printWebView(_ call: CAPPluginCall) {
-        let name = call.getString("name") ?? "Document"
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            guard let webView = self.bridge?.webView else {
-                call.reject("WebView not available")
-                return
-            }
-
-            do {
-                try self.implementation.printWebView(
-                    webView: webView,
-                    name: name,
-                    presentingViewController: self.bridge?.viewController
-                )
-                call.resolve()
-            } catch {
-                call.reject("Failed to print web view: \(error.localizedDescription)")
             }
         }
     }
