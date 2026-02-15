@@ -150,6 +150,29 @@
         "slug": "printhtmlaspdf"
       },
       {
+        "name": "shareHtmlAsPdf",
+        "signature": "(options: ShareHtmlAsPdfOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "PrintHtmlAsPdfOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "7.3.0"
+          }
+        ],
+        "docs": "Share HTML as a correctly-sized PDF via share sheet.",
+        "complexTypes": [
+          "ShareHtmlAsPdfOptions"
+        ],
+        "slug": "sharehtmlaspdf"
+      },
+      {
         "name": "printPdf",
         "signature": "(options: PrintPdfOptions) => Promise<void>",
         "parameters": [
@@ -597,6 +620,20 @@
     }
   ],
   "enums": [],
-  "typeAliases": [],
+  "typeAliases": [
+    {
+      "name": "ShareHtmlAsPdfOptions",
+      "slug": "sharehtmlaspdfoptions",
+      "docs": "Options for sharing HTML as a correctly-sized PDF.\nMirrors printHtmlAsPdf but returns via the share sheet.",
+      "types": [
+        {
+          "text": "PrintHtmlAsPdfOptions",
+          "complexTypes": [
+            "PrintHtmlAsPdfOptions"
+          ]
+        }
+      ]
+    }
+  ],
   "pluginConfigs": []
 }

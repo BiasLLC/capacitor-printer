@@ -69,10 +69,12 @@ await Printer.printWebView({
 * [`printFile(...)`](#printfile)
 * [`printHtml(...)`](#printhtml)
 * [`printHtmlAsPdf(...)`](#printhtmlaspdf)
+* [`shareHtmlAsPdf(...)`](#sharehtmlaspdf)
 * [`printPdf(...)`](#printpdf)
 * [`printWebView(...)`](#printwebview)
 * [`getPluginVersion()`](#getpluginversion)
 * [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
 
 </docgen-index>
 
@@ -181,6 +183,23 @@ it generates an intermediate PDF with embedded page dimensions.
 | **`options`** | <code><a href="#printhtmlaspdfoptions">PrintHtmlAsPdfOptions</a></code> |
 
 **Since:** 7.2.0
+
+--------------------
+
+
+### shareHtmlAsPdf(...)
+
+```typescript
+shareHtmlAsPdf(options: ShareHtmlAsPdfOptions) => Promise<void>
+```
+
+Share HTML as a correctly-sized PDF via share sheet.
+
+| Param         | Type                                                                    |
+| ------------- | ----------------------------------------------------------------------- |
+| **`options`** | <code><a href="#printhtmlaspdfoptions">PrintHtmlAsPdfOptions</a></code> |
+
+**Since:** 7.3.0
 
 --------------------
 
@@ -329,6 +348,17 @@ Base options for all print operations.
 | Prop       | Type                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Default                 | Since |
 | ---------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----- |
 | **`name`** | <code>string</code> | Name of the print job. **Usage:** - Displayed in the system print queue - Shown in print history/logs - May appear in printer status displays - Used as default filename for "Save as PDF" option **Platform Behavior:** - **iOS**: Shown in print preview header and activity view - **Android**: Displayed in print job notification and print queue - **Web**: Used as document title in print dialog **Best Practices:** - Use descriptive names (e.g., "Invoice #12345", "Q4 Report") - Keep under 50 characters for better display - Avoid special characters that may cause issues in filenames - Include relevant identifiers (order numbers, dates, etc.) **Examples:** - "Invoice #12345" - "Sales Report - 2024 Q4" - "Customer Receipt - John Doe" - "Product Photo - SKU-ABC123" | <code>'Document'</code> | 7.0.0 |
+
+
+### Type Aliases
+
+
+#### ShareHtmlAsPdfOptions
+
+Options for sharing HTML as a correctly-sized PDF.
+Mirrors printHtmlAsPdf but returns via the share sheet.
+
+<code><a href="#printhtmlaspdfoptions">PrintHtmlAsPdfOptions</a></code>
 
 </docgen-api>
 

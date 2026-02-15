@@ -19,6 +19,10 @@ export class PrinterWeb extends WebPlugin {
         // Web fallback: just print HTML directly
         return this.printHtml({ html: options.html, name: options.name });
     }
+    async shareHtmlAsPdf(options) {
+        // Web fallback: just print HTML directly
+        return this.printHtml({ html: options.html, name: options.name });
+    }
     async printFile(options) {
         const { path, name } = options;
         // On web, we can only print URLs that are accessible

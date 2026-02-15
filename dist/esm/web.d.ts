@@ -3,6 +3,7 @@ import type { PrintBase64Options, PrintFileOptions, PrintHtmlAsPdfOptions, Print
 export declare class PrinterWeb extends WebPlugin implements PrinterPlugin {
     printBase64(options: PrintBase64Options): Promise<void>;
     printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void>;
+    shareHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void>;
     printFile(options: PrintFileOptions): Promise<void>;
     printHtml(options: PrintHtmlOptions): Promise<void>;
     printPdf(options: PrintPdfOptions): Promise<void>;

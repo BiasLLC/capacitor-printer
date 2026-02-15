@@ -144,6 +144,12 @@ export interface PrinterPlugin {
   printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void>;
 
   /**
+   * Share HTML as a correctly-sized PDF via share sheet.
+   * @since 7.3.0
+   */
+  shareHtmlAsPdf(options: ShareHtmlAsPdfOptions): Promise<void>;
+
+  /**
    * Presents the printing UI to print PDF documents.
    *
    * **Platform Behavior:**
@@ -445,6 +451,14 @@ export interface PrintHtmlAsPdfOptions extends PrintOptions {
   /** Page height in millimeters */
   pageHeight: number;
 }
+
+/**
+ * Options for sharing HTML as a correctly-sized PDF.
+ * Mirrors printHtmlAsPdf but returns via the share sheet.
+ *
+ * @since 7.3.0
+ */
+export type ShareHtmlAsPdfOptions = PrintHtmlAsPdfOptions;
 
 /**
  * Options for printing PDF documents.

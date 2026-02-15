@@ -35,6 +35,11 @@ export class PrinterWeb extends WebPlugin implements PrinterPlugin {
     return this.printHtml({ html: options.html, name: options.name });
   }
 
+  async shareHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void> {
+    // Web fallback: just print HTML directly
+    return this.printHtml({ html: options.html, name: options.name });
+  }
+
   async printFile(options: PrintFileOptions): Promise<void> {
     const { path, name } = options;
 
