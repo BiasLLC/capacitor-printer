@@ -69,6 +69,7 @@ await Printer.printWebView({
 * [`printFile(...)`](#printfile)
 * [`printHtml(...)`](#printhtml)
 * [`printHtmlAsPdf(...)`](#printhtmlaspdf)
+* [`printHtmlAsPdfWebView(...)`](#printhtmlaspdfwebview)
 * [`shareHtmlAsPdf(...)`](#sharehtmlaspdf)
 * [`printPdf(...)`](#printpdf)
 * [`getPluginVersion()`](#getpluginversion)
@@ -186,6 +187,24 @@ it generates an intermediate PDF with embedded page dimensions.
 --------------------
 
 
+### printHtmlAsPdfWebView(...)
+
+```typescript
+printHtmlAsPdfWebView(options: PrintHtmlAsPdfWebViewOptions) => Promise<void>
+```
+
+Print HTML as PDF using WKWebView for full CSS/font support.
+Unlike printHtmlAsPdf(), supports @font-face and custom fonts.
+
+| Param         | Type                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------- |
+| **`options`** | <code><a href="#printhtmlaspdfwebviewoptions">PrintHtmlAsPdfWebViewOptions</a></code> |
+
+**Since:** 7.4.0
+
+--------------------
+
+
 ### shareHtmlAsPdf(...)
 
 ```typescript
@@ -290,6 +309,19 @@ Options for printing HTML as a correctly-sized PDF.
 Loads HTML in a hidden WKWebView, generates a PDF at the
 specified page dimensions, then prints the PDF. CSS @page
 margins in the HTML are preserved and authoritative.
+
+| Prop             | Type                | Description                   |
+| ---------------- | ------------------- | ----------------------------- |
+| **`html`**       | <code>string</code> | Complete HTML document string |
+| **`pageWidth`**  | <code>number</code> | Page width in millimeters     |
+| **`pageHeight`** | <code>number</code> | Page height in millimeters    |
+
+
+#### PrintHtmlAsPdfWebViewOptions
+
+Options for printing HTML as PDF using WKWebView.
+Full CSS support including @font-face and custom fonts.
+Margins should be handled via CSS @page rules in the HTML.
 
 | Prop             | Type                | Description                   |
 | ---------------- | ------------------- | ----------------------------- |

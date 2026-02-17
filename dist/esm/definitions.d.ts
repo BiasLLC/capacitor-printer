@@ -140,6 +140,12 @@ export interface PrinterPlugin {
      */
     printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void>;
     /**
+     * Print HTML as PDF using WKWebView for full CSS/font support.
+     * Unlike printHtmlAsPdf(), supports @font-face and custom fonts.
+     * @since 7.4.0
+     */
+    printHtmlAsPdfWebView(options: PrintHtmlAsPdfWebViewOptions): Promise<void>;
+    /**
      * Share HTML as a correctly-sized PDF via share sheet.
      * @since 7.3.0
      */
@@ -384,6 +390,20 @@ export interface PrintHtmlOptions extends PrintOptions {
  * @since 7.2.0
  */
 export interface PrintHtmlAsPdfOptions extends PrintOptions {
+    /** Complete HTML document string */
+    html: string;
+    /** Page width in millimeters */
+    pageWidth: number;
+    /** Page height in millimeters */
+    pageHeight: number;
+}
+/**
+ * Options for printing HTML as PDF using WKWebView.
+ * Full CSS support including @font-face and custom fonts.
+ * Margins should be handled via CSS @page rules in the HTML.
+ * @since 7.4.0
+ */
+export interface PrintHtmlAsPdfWebViewOptions extends PrintOptions {
     /** Complete HTML document string */
     html: string;
     /** Page width in millimeters */

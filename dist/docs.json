@@ -150,6 +150,29 @@
         "slug": "printhtmlaspdf"
       },
       {
+        "name": "printHtmlAsPdfWebView",
+        "signature": "(options: PrintHtmlAsPdfWebViewOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "PrintHtmlAsPdfWebViewOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "7.4.0"
+          }
+        ],
+        "docs": "Print HTML as PDF using WKWebView for full CSS/font support.\nUnlike printHtmlAsPdf(), supports @font-face and custom fonts.",
+        "complexTypes": [
+          "PrintHtmlAsPdfWebViewOptions"
+        ],
+        "slug": "printhtmlaspdfwebview"
+      },
+      {
         "name": "shareHtmlAsPdf",
         "signature": "(options: ShareHtmlAsPdfOptions) => Promise<void>",
         "parameters": [
@@ -439,6 +462,41 @@
       "tags": [
         {
           "text": "7.2.0",
+          "name": "since"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "html",
+          "tags": [],
+          "docs": "Complete HTML document string",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "pageWidth",
+          "tags": [],
+          "docs": "Page width in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "pageHeight",
+          "tags": [],
+          "docs": "Page height in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "PrintHtmlAsPdfWebViewOptions",
+      "slug": "printhtmlaspdfwebviewoptions",
+      "docs": "Options for printing HTML as PDF using WKWebView.\nFull CSS support including @font-face and custom fonts.\nMargins should be handled via CSS @page rules in the HTML.",
+      "tags": [
+        {
+          "text": "7.4.0",
           "name": "since"
         }
       ],

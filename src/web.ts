@@ -4,6 +4,7 @@ import type {
   PrintBase64Options,
   PrintFileOptions,
   PrintHtmlAsPdfOptions,
+  PrintHtmlAsPdfWebViewOptions,
   PrintHtmlOptions,
   PrintOptions,
   PrintPdfOptions,
@@ -32,6 +33,11 @@ export class PrinterWeb extends WebPlugin implements PrinterPlugin {
 
   async printHtmlAsPdf(options: PrintHtmlAsPdfOptions): Promise<void> {
     // Web fallback: just print HTML directly
+    return this.printHtml({ html: options.html, name: options.name });
+  }
+
+  async printHtmlAsPdfWebView(options: PrintHtmlAsPdfWebViewOptions): Promise<void> {
+    // Web fallback: same as printHtml
     return this.printHtml({ html: options.html, name: options.name });
   }
 

@@ -3,7 +3,7 @@ import Capacitor
 
 @objc(PrinterPlugin)
 public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
-    private let pluginVersion: String = "7.3.1"
+    private let pluginVersion: String = "7.4.0"
     public let identifier = "PrinterPlugin"
     public let jsName = "Printer"
     public let pluginMethods: [CAPPluginMethod] = [
@@ -11,6 +11,7 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "printFile", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "printHtml", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "printHtmlAsPdf", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "printHtmlAsPdfWebView", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "shareHtmlAsPdf", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "printPdf", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getPluginVersion", returnType: CAPPluginReturnPromise)
@@ -44,6 +45,47 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             } catch {
                 call.reject("Failed to print base64 data: \(error.localizedDescription)")
             }
+        }
+    }
+
+    @objc func printHtmlAsPdfWebView(_ call: CAPPluginCall) {
+        guard let html = call.getString("html") else {
+            call.reject("html is required")
+            return
+        }
+
+        let name = call.getString("name") ?? "Document"
+
+        guard let pageWidth = call.getDouble("pageWidth") else {
+            call.reject("pageWidth is required (mm)")
+            return
+        }
+        guard let pageHeight = call.getDouble("pageHeight") else {
+            call.reject("pageHeight is required (mm)")
+            return
+        }
+
+        if #available(iOS 15.0, *) {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+
+                self.implementation.printHtmlAsPdfWebView(
+                    html: html,
+                    name: name,
+                    pageWidthMM: pageWidth,
+                    pageHeightMM: pageHeight,
+                    presentingViewController: self.bridge?.viewController
+                ) { result in
+                    switch result {
+                    case .success:
+                        call.resolve()
+                    case .failure(let error):
+                        call.reject("Print failed: \(error.localizedDescription)")
+                    }
+                }
+            }
+        } else {
+            call.reject("printHtmlAsPdfWebView requires iOS 15.0+")
         }
     }
 
