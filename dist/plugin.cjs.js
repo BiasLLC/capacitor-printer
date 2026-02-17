@@ -27,7 +27,7 @@ class PrinterWeb extends core.WebPlugin {
         return this.printHtml({ html: options.html, name: options.name });
     }
     async printHtmlAsPdfWebView(options) {
-        // Web fallback: same as printHtml
+        // Web fallback: same as printHtml (margins handled by browser)
         return this.printHtml({ html: options.html, name: options.name });
     }
     async shareHtmlAsPdf(options) {

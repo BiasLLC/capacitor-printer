@@ -522,6 +522,34 @@
           "docs": "Page height in millimeters",
           "complexTypes": [],
           "type": "number"
+        },
+        {
+          "name": "marginTop",
+          "tags": [],
+          "docs": "Top margin in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "marginBottom",
+          "tags": [],
+          "docs": "Bottom margin in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "marginLeft",
+          "tags": [],
+          "docs": "Left margin in millimeters",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "marginRight",
+          "tags": [],
+          "docs": "Right margin in millimeters",
+          "complexTypes": [],
+          "type": "number"
         }
       ]
     },

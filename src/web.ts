@@ -37,7 +37,7 @@ export class PrinterWeb extends WebPlugin implements PrinterPlugin {
   }
 
   async printHtmlAsPdfWebView(options: PrintHtmlAsPdfWebViewOptions): Promise<void> {
-    // Web fallback: same as printHtml
+    // Web fallback: same as printHtml (margins handled by browser)
     return this.printHtml({ html: options.html, name: options.name });
   }
 

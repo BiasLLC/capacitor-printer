@@ -323,11 +323,15 @@ Options for printing HTML as PDF using WKWebView.
 Full CSS support including @font-face and custom fonts.
 Margins should be handled via CSS @page rules in the HTML.
 
-| Prop             | Type                | Description                   |
-| ---------------- | ------------------- | ----------------------------- |
-| **`html`**       | <code>string</code> | Complete HTML document string |
-| **`pageWidth`**  | <code>number</code> | Page width in millimeters     |
-| **`pageHeight`** | <code>number</code> | Page height in millimeters    |
+| Prop               | Type                | Description                   |
+| ------------------ | ------------------- | ----------------------------- |
+| **`html`**         | <code>string</code> | Complete HTML document string |
+| **`pageWidth`**    | <code>number</code> | Page width in millimeters     |
+| **`pageHeight`**   | <code>number</code> | Page height in millimeters    |
+| **`marginTop`**    | <code>number</code> | Top margin in millimeters     |
+| **`marginBottom`** | <code>number</code> | Bottom margin in millimeters  |
+| **`marginLeft`**   | <code>number</code> | Left margin in millimeters    |
+| **`marginRight`**  | <code>number</code> | Right margin in millimeters   |
 
 
 #### PrintPdfOptions

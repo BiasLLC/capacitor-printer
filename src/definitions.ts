@@ -428,6 +428,18 @@ export interface PrintHtmlAsPdfWebViewOptions extends PrintOptions {
 
   /** Page height in millimeters */
   pageHeight: number;
+
+  /** Top margin in millimeters */
+  marginTop: number;
+
+  /** Bottom margin in millimeters */
+  marginBottom: number;
+
+  /** Left margin in millimeters */
+  marginLeft: number;
+
+  /** Right margin in millimeters */
+  marginRight: number;
 }
 
 /**

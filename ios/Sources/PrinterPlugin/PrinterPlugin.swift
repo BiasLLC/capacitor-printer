@@ -3,7 +3,7 @@ import Capacitor
 
 @objc(PrinterPlugin)
 public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
-    private let pluginVersion: String = "7.4.0"
+    private let pluginVersion: String = "7.4.1"
     public let identifier = "PrinterPlugin"
     public let jsName = "Printer"
     public let pluginMethods: [CAPPluginMethod] = [
@@ -64,6 +64,22 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             call.reject("pageHeight is required (mm)")
             return
         }
+        guard let marginTop = call.getDouble("marginTop") else {
+            call.reject("marginTop is required (mm)")
+            return
+        }
+        guard let marginBottom = call.getDouble("marginBottom") else {
+            call.reject("marginBottom is required (mm)")
+            return
+        }
+        guard let marginLeft = call.getDouble("marginLeft") else {
+            call.reject("marginLeft is required (mm)")
+            return
+        }
+        guard let marginRight = call.getDouble("marginRight") else {
+            call.reject("marginRight is required (mm)")
+            return
+        }
 
         if #available(iOS 15.0, *) {
             DispatchQueue.main.async { [weak self] in
@@ -74,6 +90,10 @@ public class PrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                     name: name,
                     pageWidthMM: pageWidth,
                     pageHeightMM: pageHeight,
+                    marginTopMM: marginTop,
+                    marginBottomMM: marginBottom,
+                    marginLeftMM: marginLeft,
+                    marginRightMM: marginRight,
                     presentingViewController: self.bridge?.viewController
                 ) { result in
                     switch result {

@@ -12,6 +12,7 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
     var delegateId: String?
     private weak var webView: WKWebView?
     private let pageSize: CGSize
+    private let margins: UIEdgeInsets
     private let jobName: String
     private weak var presentingViewController: UIViewController?
     private let completion: (Result<Void, Error>) -> Void
@@ -19,12 +20,14 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
     init(
         webView: WKWebView,
         pageSize: CGSize,
+        margins: UIEdgeInsets,
         jobName: String,
         presentingViewController: UIViewController?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
         self.webView = webView
         self.pageSize = pageSize
+        self.margins = margins
         self.jobName = jobName
         self.presentingViewController = presentingViewController
         self.completion = completion
@@ -74,22 +77,35 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
             return
         }
 
-        let pdfConfig = WKPDFConfiguration()
-        pdfConfig.rect = CGRect(origin: .zero, size: pageSize)
+        // Get print formatter from WKWebView — inherits font rendering
+        let printFormatter = webView.viewPrintFormatter()
 
-        webView.createPDF(configuration: pdfConfig) { [weak self] result in
-            guard let self = self else { return }
+        // Create renderer with page geometry
+        let renderer = UIPrintPageRenderer()
+        renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
 
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let pdfData):
-                    self.presentPDF(data: pdfData)
-                case .failure(let error):
-                    self.cleanup()
-                    self.completion(.failure(error))
-                }
-            }
+        let paperRect = CGRect(origin: .zero, size: pageSize)
+        let printableRect = paperRect.inset(by: margins)
+
+        renderer.setValue(NSValue(cgRect: paperRect), forKey: "paperRect")
+        renderer.setValue(NSValue(cgRect: printableRect), forKey: "printableRect")
+
+        // Generate PDF
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, paperRect, nil)
+        renderer.prepare(forDrawingPages: NSMakeRange(0, renderer.numberOfPages))
+
+        for i in 0..<renderer.numberOfPages {
+            UIGraphicsBeginPDFPage()
+            renderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
         }
+        UIGraphicsEndPDFContext()
+
+        // Clean up webView before presenting
+        self.cleanup()
+
+        // Present the PDF
+        self.presentPDF(data: pdfData as Data)
     }
 
     // MARK: - Print Presentation
@@ -291,6 +307,10 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
         name: String,
         pageWidthMM: Double,
         pageHeightMM: Double,
+        marginTopMM: Double,
+        marginBottomMM: Double,
+        marginLeftMM: Double,
+        marginRightMM: Double,
         presentingViewController: UIViewController?,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
@@ -304,6 +324,12 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
         let pageW = pageWidthMM * mmToPt
         let pageH = pageHeightMM * mmToPt
         let pageSize = CGSize(width: pageW, height: pageH)
+        let margins = UIEdgeInsets(
+            top: marginTopMM * mmToPt,
+            left: marginLeftMM * mmToPt,
+            bottom: marginBottomMM * mmToPt,
+            right: marginRightMM * mmToPt
+        )
 
         // Create hidden WKWebView sized to page
         let config = WKWebViewConfiguration()
@@ -319,6 +345,7 @@ private class WebViewPDFDelegate: NSObject, WKNavigationDelegate {
         let delegate = WebViewPDFDelegate(
             webView: webView,
             pageSize: pageSize,
+            margins: margins,
             jobName: name,
             presentingViewController: viewController,
             completion: completion
